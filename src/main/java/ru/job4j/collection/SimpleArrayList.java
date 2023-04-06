@@ -12,15 +12,15 @@ public class SimpleArrayList<T> implements SimpleList<T> {
         container = (T[]) new Object[capacity];
     }
 
-    private T[] expand() {
-        return Arrays.copyOf(container, (size + 1) * 2);
+    private void expand() {
+        container = Arrays.copyOf(container, (size + 1) * 2);
     }
 
 
     @Override
     public void add(T value) {
         if (size == container.length) {
-            container = expand();
+            expand();
         }
         container[size++] = value;
         modCount++;
@@ -51,7 +51,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
     @Override
     public T get(int index) {
-        return container[Objects.checkIndex(index, size)];
+        Objects.checkIndex(index, size);
+        return container[index];
     }
 
     @Override
@@ -65,13 +66,9 @@ public class SimpleArrayList<T> implements SimpleList<T> {
             final private int expectedModCount = modCount;
             private int cursor = 0;
 
-            private boolean hasMod() {
-                return expectedModCount == modCount;
-            }
-
             @Override
             public boolean hasNext() {
-                if (!hasMod()) {
+                if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException(
                             "Итератор не может продолжить работу, т.к. во время его работы в текущий список были внесены изменения");
                 }
