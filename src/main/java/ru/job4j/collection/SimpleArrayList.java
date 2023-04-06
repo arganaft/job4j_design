@@ -30,7 +30,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     public T set(int index, T newValue) {
         T oldValue = get(index);
         container[index] = newValue;
-        modCount++;
         return oldValue;
     }
 
