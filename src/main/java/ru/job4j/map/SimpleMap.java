@@ -14,14 +14,18 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
+    private int indexOf (Object key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
     @Override
     public boolean put(K key, V value) {
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
-        boolean validPut = table[indexFor(hash(Objects.hashCode(key)))] == null;
+        boolean validPut = table[indexOf(key)] == null;
         if (validPut) {
-            table[indexFor(hash(Objects.hashCode(key)))] = new MapEntry<>(key, value);
+            table[indexOf(key)] = new MapEntry<>(key, value);
             modCount++;
             count++;
         }
@@ -41,26 +45,27 @@ public class SimpleMap<K, V> implements Map<K, V> {
         table = new MapEntry[capacity << 1];
         for (MapEntry el : oldTable) {
             if (el != null) {
-                table[indexFor(hash(Objects.hashCode(el.key)))] = el;
+                table[indexOf(el.key)] = el;
             }
         }
     }
 
+    private boolean valideKey(K key) {
+        K k = table[indexOf(key)].key;
+        return Objects.hashCode(key) == Objects.hashCode(k) && Objects.equals(k, key);
+    }
+
     @Override
     public V get(K key) {
-        int index = indexFor(hash(Objects.hashCode(key)));
-        if (table[index] == null) {
-            return null;
-        }
-        K k = table[index].key;
-        return (k == key || (Objects.hashCode(key) == Objects.hashCode(k) && Objects.equals(k, key))) ? table[index].value : null;
+        int index = indexOf(key);
+        return table[index] != null && valideKey(key) ? table[index].value : null;
     }
 
     @Override
     public boolean remove(K key) {
         boolean validRemove = get(key) != null;
         if (validRemove) {
-            table[indexFor(hash(Objects.hashCode(key)))] = null;
+            table[indexOf(key)] = null;
             modCount++;
             count--;
         }
@@ -71,8 +76,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public Iterator<K> iterator() {
         return new Iterator<K>() {
             final private int expectedModCount = modCount;
-            MapEntry nextElement;
-            boolean callNext = true;
             int index = 0;
             @Override
             public boolean hasNext() {
@@ -80,12 +83,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                     throw new ConcurrentModificationException(
                             "Итератор не может продолжить работу, т.к. во время его работы в текущую карту были внесены изменения");
                 }
-                while (index < table.length && callNext) {
-                    if (table[index] != null) {
-                        nextElement = table[index];
-                        callNext = false;
-                        break;
-                    }
+                while (index < table.length && table[index] == null) {
                     index++;
                 }
                 return index < table.length;
@@ -96,9 +94,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                index++;
-                callNext = true;
-                return (K) nextElement.key;
+                return table[index++].key;
             }
         };
     }
