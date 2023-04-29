@@ -14,7 +14,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
-    private int indexOf (Object key) {
+    private int indexOf(Object key) {
         return indexFor(hash(Objects.hashCode(key)));
     }
 
