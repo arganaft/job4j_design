@@ -33,7 +33,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(int hashCode) {
-        return (hashCode == 0) ? 0 : hashCode ^ (hashCode >>> 16);
+        return hashCode ^ (hashCode >>> 16);
     }
 
     private int indexFor(int hash) {
@@ -42,7 +42,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         MapEntry<K, V>[] oldTable = table;
-        table = new MapEntry[capacity << 1];
+        table = new MapEntry[capacity *= 2];
         for (MapEntry el : oldTable) {
             if (el != null) {
                 table[indexOf(el.key)] = el;
@@ -50,22 +50,23 @@ public class SimpleMap<K, V> implements Map<K, V> {
         }
     }
 
-    private boolean valideKey(K key) {
-        K k = table[indexOf(key)].key;
+    private boolean valideKey(K key, int index) {
+        K k = table[index].key;
         return Objects.hashCode(key) == Objects.hashCode(k) && Objects.equals(k, key);
     }
 
     @Override
     public V get(K key) {
         int index = indexOf(key);
-        return table[index] != null && valideKey(key) ? table[index].value : null;
+        return table[index] != null && valideKey(key, index) ? table[index].value : null;
     }
 
     @Override
     public boolean remove(K key) {
-        boolean validRemove = get(key) != null;
+        int index = indexOf(key);
+        boolean validRemove = table[index] != null && valideKey(key, index);
         if (validRemove) {
-            table[indexOf(key)] = null;
+            table[index] = null;
             modCount++;
             count--;
         }
