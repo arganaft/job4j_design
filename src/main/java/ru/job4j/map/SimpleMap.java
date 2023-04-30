@@ -42,7 +42,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         MapEntry<K, V>[] oldTable = table;
-        table = new MapEntry[capacity *= 2];
+        capacity *= 2;
+        table = new MapEntry[capacity];
         for (MapEntry el : oldTable) {
             if (el != null) {
                 table[indexOf(el.key)] = el;
