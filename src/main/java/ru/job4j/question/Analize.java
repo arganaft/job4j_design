@@ -1,5 +1,6 @@
 package ru.job4j.question;
 
+
 import java.util.*;
 
 public class Analize {
@@ -7,27 +8,31 @@ public class Analize {
     public static Info diff(Set<User> previous, Set<User> current) {
         int added = 0;
         int changed = 0;
-        int deleted = 0;
-        List<User> prevList = previous.stream().sorted(Comparator.comparingInt(User::getId)).toList();
-        List<User> currList = current.stream().sorted(Comparator.comparingInt(User::getId)).toList();
-        int inPr = 0;
-        int inCu = 0;
-
-        while (inPr < prevList.size() && inCu < currList.size()) {
-            if (prevList.get(inPr).getId() == currList.get(inCu).getId()
-                && !prevList.get(inPr).getName().equals(currList.get(inCu).getName())) {
+        int deleted;
+        int common = 0;
+        Map<Integer, User> map = new HashMap<>();
+        Iterator<User> itPr = previous.iterator();
+        User el;
+        while (itPr.hasNext()) {
+            el = itPr.next();
+            map.put(el.getId(), el);
+        }
+        Iterator<User> itCur = current.iterator();
+        User user;
+        while (itCur.hasNext()) {
+            user = itCur.next();
+            el = map.put(user.getId(), user);
+            if (el == null) {
+                added++;
+            } else if (el.getId() == user.getId() && !el.getName().equals(user.getName())) {
                 changed++;
-                inPr++;
-                inCu++;
-            } else if (prevList.get(inPr).getId() != currList.get(inCu).getId()) {
-                deleted++;
-                inPr++;
             } else {
-                inPr++;
-                inCu++;
+                common++;
             }
         }
-        added += currList.size() - inCu;
+        deleted = previous.size() - common - changed;
+
+
         return new Info(added, changed, deleted);
     }
 
