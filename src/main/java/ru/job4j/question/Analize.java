@@ -11,16 +11,11 @@ public class Analize {
         int deleted;
         int common = 0;
         Map<Integer, User> map = new HashMap<>();
-        Iterator<User> itPr = previous.iterator();
         User el;
-        while (itPr.hasNext()) {
-            el = itPr.next();
-            map.put(el.getId(), el);
+        for (User user : previous){
+            map.put(user.getId(), user);
         }
-        Iterator<User> itCur = current.iterator();
-        User user;
-        while (itCur.hasNext()) {
-            user = itCur.next();
+        for (User user : current) {
             el = map.put(user.getId(), user);
             if (el == null) {
                 added++;
@@ -31,9 +26,6 @@ public class Analize {
             }
         }
         deleted = previous.size() - common - changed;
-
-
         return new Info(added, changed, deleted);
     }
-
 }
