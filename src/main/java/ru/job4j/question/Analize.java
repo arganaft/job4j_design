@@ -12,7 +12,7 @@ public class Analize {
         int common = 0;
         Map<Integer, User> map = new HashMap<>();
         User el;
-        for (User user : previous){
+        for (User user : previous) {
             map.put(user.getId(), user);
         }
         for (User user : current) {
