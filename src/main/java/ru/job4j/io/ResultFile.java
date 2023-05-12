@@ -17,6 +17,7 @@ public class ResultFile {
                     out.write("   ".getBytes());
                 }
                 out.write(System.lineSeparator().getBytes());
+                System.out.println();
             }
         } catch (IOException e) {
             e.printStackTrace();
