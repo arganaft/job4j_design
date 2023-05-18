@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,7 @@ public class LogFilter {
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             res = in.lines().map(str -> str.split(" ")).
                     filter(arr -> "404".equals(arr[arr.length - 2])).
-                    map(Arrays::toString).collect(Collectors.toList());
+                    map(arr -> String.join(" ", arr)) .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
