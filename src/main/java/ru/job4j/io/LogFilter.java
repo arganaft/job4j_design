@@ -19,6 +19,11 @@ public class LogFilter {
     }
 
     public static void save(List<String> log, String file) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(file)))) {
+            log.forEach(out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
