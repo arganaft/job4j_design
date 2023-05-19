@@ -44,6 +44,4 @@ class ConfigTest {
         config.load();
         assertThat(config.value("n77ame")).isNull();
     }
-
-
 }
