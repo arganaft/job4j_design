@@ -20,7 +20,7 @@ class ConfigTest {
         assertThatThrownBy(() -> {
             config.load();
             config.value("name");
-        } ).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -30,7 +30,7 @@ class ConfigTest {
         assertThatThrownBy(() -> {
             config.load();
             config.value("name");
-        } ).isInstanceOf(IllegalArgumentException.class);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
