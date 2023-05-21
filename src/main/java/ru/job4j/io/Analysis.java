@@ -1,7 +1,7 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 public class Analysis {
     public void unavailable(String source, String target) {
@@ -9,7 +9,8 @@ public class Analysis {
             BufferedWriter out = new BufferedWriter(new FileWriter(target))) {
             boolean flag = true;
             boolean valid;
-            for (String[] arr: in.lines().map(line -> line.split(" ", 2)).toList()) {
+            List<String[]> list = in.lines().map(line -> line.split(" ", 2)).toList();
+            for (String[] arr: list) {
                 valid = "400".equals(arr[0]) || "500".equals(arr[0]);
                 if (flag && valid) {
                     out.write(arr[1]);
