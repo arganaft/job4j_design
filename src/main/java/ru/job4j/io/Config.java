@@ -18,17 +18,19 @@ public class Config {
 
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().filter(line -> {
-                try {
-                    return  (line.length() != 0) && !line.startsWith("#") && !line.startsWith("=");
-                } catch (Exception e) {
-                    throw new IllegalArgumentException(e);
-                }
-                    }).
-                    map(line -> line.split("=", 2)).forEach(arr -> values.putIfAbsent(arr[0], arr[1]));
+            read.lines().filter(Config::validLine).
+                    map(line -> line.split("=", 2)).
+                    forEach(arr -> values.putIfAbsent(arr[0], arr[1]));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean validLine(String line) {
+        if (line.length() == 0 || line.startsWith("#") || line.startsWith("=")) {
+            throw new IllegalArgumentException();
+        }
+        return true;
     }
 
     public String value(String key) {

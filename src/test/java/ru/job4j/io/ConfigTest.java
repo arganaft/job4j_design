@@ -17,16 +17,20 @@ class ConfigTest {
     void whenPairWithEmptyLine() {
         String path = "./data/Pair_With_Empty_Line.properties";
         Config config = new Config(path);
-        config.load();
-        assertThat(config.value("name")).isEqualTo("Petr Arsentev");
+        assertThatThrownBy(() -> {
+            config.load();
+            config.value("name");
+        } ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     void whenPairWithComment() {
         String path = "./data/Pair_With_Comment.properties";
         Config config = new Config(path);
-        config.load();
-        assertThat(config.value("name")).isEqualTo("Petr Arsentev");
+        assertThatThrownBy(() -> {
+            config.load();
+            config.value("name");
+        } ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -34,7 +38,7 @@ class ConfigTest {
         String path = "./data/Pair_With_More_Than_2_Separators.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name")).isEqualTo("Petr= Arsen=tev=");
+        assertThat(config.value("name")).isEqualTo("Petr= Arsen=tev");
     }
 
     @Test
