@@ -12,22 +12,18 @@ public class Analysis {
             List<String[]> list = in.lines().map(line -> line.split(" ", 2)).toList();
             for (String[] arr: list) {
                 valid = "400".equals(arr[0]) || "500".equals(arr[0]);
-                if (flag && valid) {
+                if (flag == valid) {
                     out.write(arr[1]);
                     out.write(";");
-                    flag = false;
-                } else if (!flag && !valid) {
-                    out.write(arr[1]);
-                    out.write(";");
-                    out.write(System.lineSeparator());
-                    flag = true;
+                    out.write(valid ? "" : System.lineSeparator());
+                    flag = !flag;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
+
     public static void main(String[] args) {
         Analysis analysis = new Analysis();
         analysis.unavailable("data/server.log", "data/target.csv");
