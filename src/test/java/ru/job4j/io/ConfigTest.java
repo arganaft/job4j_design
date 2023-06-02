@@ -17,6 +17,14 @@ class ConfigTest {
     void whenPairWithEmptyLine() {
         String path = "./data/Pair_With_Empty_Line.properties";
         Config config = new Config(path);
+        config.load();
+        assertThat(config.value("hibernate")).isEqualTo("Petr Arsentev");
+    }
+
+    @Test
+    void whenPairWithPatternViolation() {
+        String path = "./data/Pair_With_Pattern_Violation.properties";
+        Config config = new Config(path);
         assertThatThrownBy(() -> {
             config.load();
             config.value("name");
@@ -27,10 +35,7 @@ class ConfigTest {
     void whenPairWithComment() {
         String path = "./data/Pair_With_Comment.properties";
         Config config = new Config(path);
-        assertThatThrownBy(() -> {
-            config.load();
-            config.value("name");
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThat(config.value("name")).isNull();
     }
 
     @Test

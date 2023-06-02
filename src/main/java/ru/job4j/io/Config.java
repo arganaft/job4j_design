@@ -27,10 +27,13 @@ public class Config {
     }
 
     private static boolean validLine(String line) {
-        if (line.length() == 0 || line.startsWith("#") || line.startsWith("=")) {
+        if (line.length() == 0) {
+            return false;
+        }
+        if (!line.contains("=") || line.startsWith("=") || line.split("=").length < 2) {
             throw new IllegalArgumentException();
         }
-        return true;
+        return !line.startsWith("#");
     }
 
     public String value(String key) {
