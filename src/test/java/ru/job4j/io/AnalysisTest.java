@@ -11,12 +11,12 @@ class AnalysisTest {
     void unavailable2Times(@TempDir Path tempDir) throws IOException {
         File source = tempDir.resolve("source.txt").toFile();
         try (PrintWriter out = new PrintWriter(source)) {
-            out.println("200 10:56:01\n" +
-                    "500 10:57:01\n" +
-                    "400 10:58:01\n" +
-                    "300 10:59:01\n" +
-                    "500 11:01:02\n" +
-                    "200 11:02:02");
+            out.println("200 10:56:01\n"
+                    + "500 10:57:01\n"
+                    + "400 10:58:01\n"
+                    + "300 10:59:01\n"
+                    + "500 11:01:02\n"
+                    + "200 11:02:02");
         }
         File target  = tempDir.resolve("target.txt").toFile();
         Analysis analysis = new Analysis();
@@ -32,12 +32,12 @@ class AnalysisTest {
     void unavailable1Times(@TempDir Path tempDir) throws IOException {
         File source = tempDir.resolve("source.txt").toFile();
         try (PrintWriter out = new PrintWriter(source)) {
-            out.println("200 10:56:01\n" +
-                    "500 10:57:01\n" +
-                    "400 10:58:01\n" +
-                    "500 10:59:01\n" +
-                    "400 11:01:02\n" +
-                    "300 11:02:02");
+            out.println("200 10:56:01\n"
+                    + "500 10:57:01\n"
+                    + "400 10:58:01\n"
+                    + "500 10:59:01\n"
+                    + "400 11:01:02\n"
+                    + "300 11:02:02");
         }
         File target  = tempDir.resolve("target.txt").toFile();
         Analysis analysis = new Analysis();
