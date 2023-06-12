@@ -27,13 +27,10 @@ public class Config {
     }
 
     private static boolean validLine(String line) {
-        if (line.length() == 0) {
-            return false;
-        }
         if (!line.contains("=") || line.startsWith("=") || line.split("=").length < 2) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("В указанном файле, в строке - \"" + line + "\" обнаружено нарушение шаблона ключ=значение");
         }
-        return !line.startsWith("#");
+        return !line.isBlank() && !line.startsWith("#");
     }
 
     public String value(String key) {
@@ -52,7 +49,10 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("data/app.properties"));
+        String path = "./data/Pair_With_Pattern_Violation.properties";
+        Config config = new Config(path);
+        config.load();
+        config.value("name");
     }
 
 }
