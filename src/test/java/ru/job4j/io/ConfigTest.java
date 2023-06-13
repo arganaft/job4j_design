@@ -25,10 +25,21 @@ class ConfigTest {
     void whenPairWithPatternViolation() {
         String path = "./data/Pair_With_Pattern_Violation.properties";
         Config config = new Config(path);
-        assertThatThrownBy(() -> {
-            config.load();
-            config.value("name");
-        }).isInstanceOf(IllegalArgumentException.class).message().contains("surname=");
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class).message().contains("surname=");
+    }
+
+    @Test
+    void whenPairWithStartsWithKey() {
+        String path = "./data/Pair_With_Starts_With_Key.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class).message().contains("=Petr Arsentev");
+    }
+
+    @Test
+    void whenPairWithKeyless() {
+        String path = "./data/Pair_With_Keyless.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class).message().contains("name -> Petr Arsentev");
     }
 
     @Test

@@ -11,6 +11,7 @@ public class Config {
 
     private final String path;
     private final Map<String, String> values = new HashMap<String, String>();
+    private static StringBuilder errMessage = new StringBuilder("Обнаруженно нарушение шаблона \"ключ=значение\" в строке - \"");
 
     public Config(final String path) {
         this.path = path;
@@ -18,7 +19,8 @@ public class Config {
 
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
-            read.lines().filter(Config::validLine).
+            read.lines().filter(line -> !line.isBlank() && !line.startsWith("#")).
+                    filter(Config::validLine).
                     map(line -> line.split("=", 2)).
                     forEach(arr -> values.putIfAbsent(arr[0], arr[1]));
         } catch (IOException e) {
@@ -30,9 +32,11 @@ public class Config {
         if ((!line.contains("=") && !line.startsWith("#"))
                 || line.startsWith("=")
                 || line.indexOf("=") == line.length() - 1) {
-            throw new IllegalArgumentException("В указанном файле, в строке - \"" + line + "\" обнаружено нарушение шаблона ключ=значение");
+            errMessage.append(line);
+            errMessage.append("\"");
+            throw new IllegalArgumentException(String.valueOf(errMessage));
         }
-        return !line.isBlank() && !line.startsWith("#");
+        return true;
     }
 
     public String value(String key) {
