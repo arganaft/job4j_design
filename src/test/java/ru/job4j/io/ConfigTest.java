@@ -32,7 +32,7 @@ class ConfigTest {
     void whenPairWithStartsWithKey() {
         String path = "./data/Pair_With_Starts_With_Key.properties";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class).message().contains("=Petr Arsentev");
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class).message().contains("=Value");
     }
 
     @Test
