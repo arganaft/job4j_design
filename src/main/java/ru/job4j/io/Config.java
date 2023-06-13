@@ -27,7 +27,9 @@ public class Config {
     }
 
     private static boolean validLine(String line) {
-        if (!line.contains("=") || line.startsWith("=") || line.split("=").length < 2) {
+        if ((!line.contains("=") && !line.startsWith("#"))
+                || line.startsWith("=")
+                || line.indexOf("=") == line.length() - 1) {
             throw new IllegalArgumentException("В указанном файле, в строке - \"" + line + "\" обнаружено нарушение шаблона ключ=значение");
         }
         return !line.isBlank() && !line.startsWith("#");
