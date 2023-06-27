@@ -27,12 +27,12 @@ public class Search {
         if (!Files.isDirectory(Paths.get(args[0]))) {
             throw new IllegalArgumentException("Root argument is not Directory. Usage  ROOT_FOLDER.");
         }
-        if (args.length ==1) {
+        if (args.length == 1) {
             throw new IllegalArgumentException("Не указанно расширение файла");
         }
         if (!args[1].startsWith(".") || args[1].length() > 4) {
-            throw new IllegalArgumentException("Расширение файла должно начинаться с \".\" и " +
-                    "содержать от 1го до 3х символов латинского алфавита ");
+            throw new IllegalArgumentException("Расширение файла должно начинаться с \".\" и "
+                    + "содержать от 1го до 3х символов латинского алфавита ");
         }
     }
 }
