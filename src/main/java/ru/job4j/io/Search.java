@@ -21,13 +21,13 @@ public class Search {
     }
 
     private static void validate(String[] args) {
-        if (args.length == 0) {
+        if (args.length != 2) {
             throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
         }
         if (!Files.isDirectory(Paths.get(args[0]))) {
             throw new IllegalArgumentException("Root argument is not Directory. Usage  ROOT_FOLDER.");
         }
-        if (args.length == 1) {
+        if (args[1].startsWith(".") && args[1].length() == 1) {
             throw new IllegalArgumentException("Не указанно расширение файла");
         }
         if (!args[1].startsWith(".") || args[1].length() > 4) {
