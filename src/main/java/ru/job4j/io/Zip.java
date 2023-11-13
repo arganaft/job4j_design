@@ -39,16 +39,33 @@ public class Zip {
         }
     }
 
+    private void validateArgs (ArgsName argsName) {
+        if (!new File(argsName.get("d")).exists()) {
+            throw new IllegalArgumentException("Error: directory missing");
+        }
+
+        if (!argsName.get("e").startsWith(".")) {
+            throw new IllegalArgumentException("Error: incorrect extension format");
+        }
+
+        if (!argsName.get("o").endsWith(".zip")) {
+            throw new IllegalArgumentException("Error: incorrect extension format");
+        }
+
+    }
+
     public static void main(String[] args) throws IOException {
+        ArgsName argsName = ArgsName.of(new String[] {"-d=c:\\projects\\job4j_design\\", "-e=.class", "-o=project.zip"});
         Zip zip = new Zip();
-        SearchFiles searcher = new SearchFiles(p -> true);
+        zip.validateArgs(argsName);
+        SearchFiles searcher = new SearchFiles(p -> !p.endsWith(argsName.get("e")));
         Files.walkFileTree(
-                Paths.get("C:\\projects\\job4j_design\\"),
+                Paths.get(argsName.get("d")),
                 searcher
         );
         zip.packFiles(
                 searcher.getPaths(),
-                new File("./main.zip")
+                new File(argsName.get("o"))
         );
     }
 }
