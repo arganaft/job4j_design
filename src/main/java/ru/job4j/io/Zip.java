@@ -39,7 +39,7 @@ public class Zip {
         }
     }
 
-    private void validateArgs (ArgsName argsName) {
+    private void validateArgs(ArgsName argsName) {
         if (!new File(argsName.get("d")).exists()) {
             throw new IllegalArgumentException("Error: directory missing");
         }
