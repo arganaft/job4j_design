@@ -75,5 +75,6 @@ public class ConsoleChat {
     public static void main(String[] args) {
         ConsoleChat cc = new ConsoleChat("data/LogOfDialogue.txt", "data/botAnswers.txt");
         cc.run();
+
     }
 }
