@@ -23,35 +23,33 @@ public class ConsoleChat {
         String answer;
         Random random = new Random();
         Scanner in = new Scanner(System.in);
-        byte flag = 1;
+        boolean flag = true;
         String question;
-        while (true) {
+         do {
             System.out.println("Введите свой вопрос...");
             question = in.nextLine();
             log.add("Вопрос:  -  " + question);
-            if (question.equals(OUT)) {
-                answer = "Запись истории диалога в файл --> " + path;
-                System.out.println(answer);
-                log.add("Ответ:  -  " + answer);
-                saveLog(log);
-                break;
-            }
-            if (question.equals(STOP)) {
-                flag = 2;
+            if (STOP.equals(question)) {
+                flag = false;
                 continue;
             }
-            if (question.equals(CONTINUE)) {
-                flag = 1;
+            if (CONTINUE.equals(question)) {
+                flag = true;
                 continue;
             }
-            if (flag == 1) {
+            if (flag) {
                 answer = phrases.get(random.nextInt(phrases.size() - 1));
                 System.out.println(answer);
                 log.add("Ответ:  -  " + answer);
             }
-        }
+        } while (!OUT.equals(question));
+        answer = "Запись истории диалога в файл --> " + path;
+        System.out.println(answer);
+        log.add("Ответ:  -  " + answer);
+        saveLog(log);
 
     }
+
 
     private void readPhrases(List<String> phrases) {
         try (BufferedReader br = new BufferedReader(new FileReader(botAnswers))) {
