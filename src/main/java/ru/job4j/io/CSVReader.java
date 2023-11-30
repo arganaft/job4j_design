@@ -14,6 +14,7 @@ public class CSVReader {
                                 .split(argsName.get("delimiter")))
                         .collect(Collectors.toList())));
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
