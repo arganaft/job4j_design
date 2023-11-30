@@ -55,9 +55,13 @@ public class Zip {
     }
 
     public static void main(String[] args) throws IOException {
-        ArgsName argsName = ArgsName.of(new String[] {"-d=c:\\projects\\job4j_design\\", "-e=.class", "-o=project.zip"});
+        ArgsName argsName = ArgsName.of(args);
         Zip zip = new Zip();
         zip.validateArgs(argsName);
+        zip.packSingleFile(
+                new File("./pom.xml"),
+                new File("./pom.zip")
+        );
         SearchFiles searcher = new SearchFiles(p -> !p.endsWith(argsName.get("e")));
         Files.walkFileTree(
                 Paths.get(argsName.get("d")),
