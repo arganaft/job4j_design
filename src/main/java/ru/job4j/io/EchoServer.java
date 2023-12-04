@@ -27,15 +27,10 @@ public class EchoServer {
                         server.close();
                         out.write("Shutting down the server...".getBytes());
                     }
-
                     if (!str.contains("/?msg=Hello") && !str.contains("/?msg=Exit")) {
                         out.write("What".getBytes());
                     }
-                    for (; str != null && !str.isEmpty(); str = in.readLine()) {
-                        System.out.println(str);
-                    }
                     out.flush();
-
                 }
             }
         }
