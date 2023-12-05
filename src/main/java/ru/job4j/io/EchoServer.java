@@ -28,6 +28,7 @@ public class EchoServer {
                         out.write("What".getBytes());
                     }
                     out.flush();
+
                 } catch (Exception e) {
                     LOG.error("Ошибка при чтении/записи на сервер", e);
                 }
