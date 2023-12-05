@@ -32,13 +32,6 @@ public class Student {
     }
 
     public static void main(String[] args) {
-//        final Person person1 = new Person(false, 30, new Contact("11-111"),
-//                new String[] {"Worker", "Married"});
-//        final Gson gson = new GsonBuilder().create();
-//        System.out.println(gson.toJson(person));
-//        final String str = "{\"sex\":false,\"age\":30,\"contact\":{\"phone\":\"11-111\"},\"statuses\":[\"Worker\",\"Married\"]}";
-//        Person iPerson = gson.fromJson(str, Person.class);
-//        System.out.println(iPerson);
         final Student student1 = new Student(3,
                 true,
                 "Steve",
