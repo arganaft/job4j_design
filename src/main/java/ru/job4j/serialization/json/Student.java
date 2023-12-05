@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class Student {
     private final int course;
@@ -31,6 +32,27 @@ public class Student {
                 + '}';
     }
 
+    public String toXML() {
+        return "<?xml version=\"1.1\" encoding=\"UTF-8\" ?>"
+                + System.lineSeparator()
+                + "<student course=\"" + course + "\" "
+                + "stateEmployee=\"" + stateEmployee + "\" "
+                + "name=\"" + name + "\">"
+                + System.lineSeparator()
+                + " " + contact.toXMLNoVersion() + "/>"
+                + System.lineSeparator()
+                + " <subjects>"
+                + System.lineSeparator()
+                + Arrays.stream(subjects)
+                .map(subject -> "  <subject>" + subject + "</subject>")
+                .collect(Collectors.joining(System.lineSeparator()))
+                + System.lineSeparator()
+                + " </subjects>"
+                + System.lineSeparator()
+                + "</student>";
+
+    }
+
     public static void main(String[] args) {
         final Student student1 = new Student(3,
                 true,
@@ -43,5 +65,6 @@ public class Student {
         final String student1ToGson = gson.toJson(student1);
         Student studentFromGson = gson.fromJson(student1ToGson, Student.class);
         System.out.println(studentFromGson);
+        System.out.println(student1.toXML());
     }
 }

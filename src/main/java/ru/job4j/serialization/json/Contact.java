@@ -13,4 +13,14 @@ public class Contact {
                 + "phone='" + phone + '\''
                 + '}';
     }
+
+    public String toXML() {
+        return "<?xml version=\"1.1\" encoding=\"UTF-8\" ?>"
+                + System.lineSeparator()
+                + "<contact phone=\"" + phone + "\">";
+    }
+
+    public String toXMLNoVersion() {
+        return "<person phone=\"" + phone + "\"";
+    }
 }
