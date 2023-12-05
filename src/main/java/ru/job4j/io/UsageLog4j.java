@@ -9,6 +9,7 @@ public class UsageLog4j {
 
     public static void main(String[] args) {
         String name = "Petr Arsentev";
+        boolean isStudent = false;
         int age = 33;
         byte course = 2;
         char gender = 'm';
@@ -18,7 +19,7 @@ public class UsageLog4j {
         double revenue = 26254625634263.4263532;
 
 
-        LOG.debug("User info name : {}, age : {}, course : {}, gender : {}, grade : {}", name, age, course, gender, grade);
+        LOG.debug("User info name : {}, isStudent : {}, age : {}, course : {}, gender : {}, grade : {}", name, isStudent, age, course, gender, grade);
         LOG.error("Profit info -> scholarship : {}, wage : {}, revenue : {}", scholarship, wage, revenue);
     }
 }
