@@ -1,3 +1,4 @@
+
 create table rules_type(
     id serial primary key,
     rule_type text
