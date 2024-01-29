@@ -40,20 +40,16 @@ or replace function discount()
     returns trigger as
 $$
     BEGIN
-        update products
-        set price = price + price * 0.2
-        where count <= 5
-        AND id = new.id;
+        new.price = new.price + new.price * 0.2;
         return NEW;
     END;
-$$
-LANGUAGE 'plpgsql';
+$$ LANGUAGE plpgsql;
 
 create trigger discount_trigger
     before insert
     on products
     for each row
-    execute procedure discount();
+    execute function discount();
 
 /*3) Создайте таблицу:
 Нужно написать триггер на row уровне, который сразу после вставки продукта
@@ -73,9 +69,8 @@ or replace function write_history()
 $$
     BEGIN
         insert into history_of_price (history_of_price_name, price, change_date)
-    values (new.product_name, new.price, current_timestamp);
-    return new;
-        return NEW;
+        values (new.product_name, new.price, current_timestamp);
+        return new;
     END;
 $$
 LANGUAGE 'plpgsql';
