@@ -22,31 +22,31 @@ public class TableEditor implements AutoCloseable {
         }
         TableEditor tableEditor = new TableEditor(config);
 
-//Создание Таблицы
+
         System.out.println("create Table");
         String tableName = "JDBS_Table";
         tableEditor.createTable(tableName);
         System.out.println(tableEditor.getTableScheme(tableName));
 
-//Добавление колонки в таблицу
+
         System.out.println("add Column");
         String columnName = "customer";
         String columnType = "varchar(255)";
         tableEditor.addColumn(tableName, columnName, columnType);
         System.out.println(tableEditor.getTableScheme(tableName));
 
-//Переименование колонки в таблице
+
         System.out.println("rename column");
         String newColumnName = "buyer";
         tableEditor.renameColumn(tableName, columnName, newColumnName);
         System.out.println(tableEditor.getTableScheme(tableName));
 
-//Удаление колонки в таблице
+
         System.out.println("drop Column");
         tableEditor.dropColumn(tableName, newColumnName);
         System.out.println(tableEditor.getTableScheme(tableName));
 
-//Удаление таблицы
+
         System.out.println(String.format("dropTable %s", tableName));
         tableEditor.dropTable(tableName);
 
