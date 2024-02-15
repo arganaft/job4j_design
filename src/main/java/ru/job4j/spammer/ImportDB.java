@@ -1,8 +1,5 @@
 package ru.job4j.spammer;
 
-
-import ru.job4j.jdbc.TableEditor;
-
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +30,7 @@ public class ImportDB {
                             users.add(new ImportDB.User(line[0], line[1]));
                         } else {
                             throw new IllegalArgumentException("Ошибка данных");
-                        };
+                        }
                     });
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -78,8 +75,6 @@ public class ImportDB {
         try (InputStream input = new FileInputStream("data/app.properties")) {
             config.load(input);
         }
-
-
         ImportDB dataBase = new ImportDB(config, "data/dump.txt");
         dataBase.save(dataBase.load());
     }

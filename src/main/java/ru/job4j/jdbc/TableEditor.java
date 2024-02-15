@@ -31,8 +31,8 @@ public class TableEditor implements AutoCloseable {
 //Добавление колонки в таблицу
         System.out.println("add Column");
         String columnName = "customer";
-        String column_type = "varchar(255)";
-        tableEditor.addColumn(tableName, columnName, column_type);
+        String columnType = "varchar(255)";
+        tableEditor.addColumn(tableName, columnName, columnType);
         System.out.println(tableEditor.getTableScheme(tableName));
 
 //Переименование колонки в таблице
