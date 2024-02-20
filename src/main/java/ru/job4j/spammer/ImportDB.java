@@ -26,11 +26,10 @@ public class ImportDB {
                     lines().
                     map(lines -> lines.split(";")).
                     forEach(line -> {
-                        if (line.length > 1 && !line[0].isBlank() && !line[1].isBlank()) {
-                            users.add(new ImportDB.User(line[0], line[1]));
-                        } else {
+                        if (line.length < 2 && line[0].isBlank() && line[1].isBlank()) {
                             throw new IllegalArgumentException("Ошибка данных");
                         }
+                        users.add(new ImportDB.User(line[0], line[1]));
                     });
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
