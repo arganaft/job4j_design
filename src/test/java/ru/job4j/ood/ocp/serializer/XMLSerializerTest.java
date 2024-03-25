@@ -1,0 +1,44 @@
+package ru.job4j.ood.ocp.serializer;
+
+import org.junit.jupiter.api.Test;
+import ru.job4j.ood.srp.formatter.DateTimeParser;
+import ru.job4j.ood.srp.formatter.ReportDateTimeParser;
+import ru.job4j.ood.srp.model.Employee;
+import ru.job4j.ood.srp.store.MemoryStore;
+
+import javax.xml.bind.JAXBException;
+import java.util.Calendar;
+
+import static org.assertj.core.api.Assertions.*;
+
+class XMLSerializerTest {
+
+    @Test
+    public void convert_WithEmployee_ReturnsValidXML() throws JAXBException {
+        MemoryStore store = new MemoryStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        DateTimeParser<Calendar> parser = new ReportDateTimeParser();
+        store.add(worker);
+        Serializer xmlSerializer = new XMLSerializer();
+        assertThat(xmlSerializer.convert(store.findBy(employee -> true)))
+                .contains(String.format("<fired>%s</fired>", parser.parse(worker.getHired())))
+                .contains(String.format("<hired>%s</hired>", parser.parse(worker.getFired())))
+                .contains("<name>Ivan</name>")
+                .contains("<salary>100.0</salary>");
+    }
+
+    @Test
+    public void convert_WithEmptyList_ReturnsEmptyXML() throws JAXBException {
+        MemoryStore store = new MemoryStore();
+        Serializer xmlSerializer = new XMLSerializer();
+        assertThat(xmlSerializer.convert(store.findBy(employee -> true))).contains("<employees/>");
+    }
+
+    @Test
+    public void convert_WithNull_ReturnsExeption() {
+        Serializer xmlSerializer = new XMLSerializer();
+        assertThatThrownBy(() -> xmlSerializer.convert(null)).isInstanceOf(NullPointerException.class);
+    }
+
+}
