@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.*;
 
 class JSONSerializerTest {
     @Test
-    void convert_WithEmployee_ReturnsValidJSON() {
+    void convertWithEmployeeReturnsValidJSON() {
         JSONSerializer jsonSerializer = new JSONSerializer();
         MemoryStore store = new MemoryStore();
         Calendar now = Calendar.getInstance();
@@ -24,14 +24,14 @@ class JSONSerializerTest {
     }
 
     @Test
-    void convert_WithEmptyList_ReturnsEmptyJSON() {
+    void convertWithEmptyListReturnsEmptyJSON() {
         JSONSerializer jsonSerializer = new JSONSerializer();
         MemoryStore store = new MemoryStore();
         assertThat(jsonSerializer.convert(store.findBy((employee -> true)))).isEqualTo("[]");
     }
 
     @Test
-    void convert_WithNull_ReturnsExeption() {
+    void convertWithNullReturnsExeption() {
         JSONSerializer jsonSerializer = new JSONSerializer();
         assertThatThrownBy(() -> jsonSerializer.convert(null)).isInstanceOf(NullPointerException.class);
     }

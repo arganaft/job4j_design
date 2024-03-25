@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 class XMLSerializerTest {
 
     @Test
-    public void convert_WithEmployee_ReturnsValidXML() throws JAXBException {
+    public void convertWithEmployeeReturnsValidXML() throws JAXBException {
         MemoryStore store = new MemoryStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
@@ -29,14 +29,14 @@ class XMLSerializerTest {
     }
 
     @Test
-    public void convert_WithEmptyList_ReturnsEmptyXML() throws JAXBException {
+    public void convertWithEmptyListReturnsEmptyXML() throws JAXBException {
         MemoryStore store = new MemoryStore();
         Serializer xmlSerializer = new XMLSerializer();
         assertThat(xmlSerializer.convert(store.findBy(employee -> true))).contains("<employees/>");
     }
 
     @Test
-    public void convert_WithNull_ReturnsExeption() {
+    public void convertWithNullReturnsExeption() {
         Serializer xmlSerializer = new XMLSerializer();
         assertThatThrownBy(() -> xmlSerializer.convert(null)).isInstanceOf(NullPointerException.class);
     }
