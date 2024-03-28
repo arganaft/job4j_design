@@ -24,6 +24,21 @@ class JSONSerializerTest {
     }
 
     @Test
+    void convertWithMultipleEmployeeReturnsValidJSON() {
+        JSONSerializer jsonSerializer = new JSONSerializer();
+        MemoryStore store = new MemoryStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker1 = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Oleg", now, now, 200);
+        store.add(worker1);
+        store.add(worker2);
+        DateTimeParser<Calendar> parser = new ReportDateTimeParser();
+        assertThat(jsonSerializer.convert(store.findBy((employee -> true))))
+                .contains(String.format("\"hired\": \"%s\"", parser.parse(worker1.getFired())))
+                .contains(String.format("\"hired\": \"%s\"", parser.parse(worker2.getFired())));
+    }
+
+    @Test
     void convertWithEmptyListReturnsEmptyJSON() {
         JSONSerializer jsonSerializer = new JSONSerializer();
         MemoryStore store = new MemoryStore();

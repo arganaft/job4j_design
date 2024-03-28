@@ -29,6 +29,27 @@ class XMLSerializerTest {
     }
 
     @Test
+    public void convertWithMultipleEmployeeReturnsValidXML() throws JAXBException {
+        MemoryStore store = new MemoryStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker1 = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Oleg", now, now, 200);
+        DateTimeParser<Calendar> parser = new ReportDateTimeParser();
+        store.add(worker1);
+        store.add(worker2);
+        Serializer xmlSerializer = new XMLSerializer();
+        assertThat(xmlSerializer.convert(store.findBy(employee -> true)))
+                .contains(String.format("<fired>%s</fired>", parser.parse(worker1.getHired())))
+                .contains(String.format("<hired>%s</hired>", parser.parse(worker1.getFired())))
+                .contains("<name>Ivan</name>")
+                .contains("<salary>100.0</salary>")
+                .contains(String.format("<fired>%s</fired>", parser.parse(worker2.getHired())))
+                .contains(String.format("<hired>%s</hired>", parser.parse(worker2.getFired())))
+                .contains("<name>Oleg</name>")
+                .contains("<salary>200.0</salary>");
+    }
+
+    @Test
     public void convertWithEmptyListReturnsEmptyXML() throws JAXBException {
         MemoryStore store = new MemoryStore();
         Serializer xmlSerializer = new XMLSerializer();
