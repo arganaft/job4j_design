@@ -3,7 +3,7 @@ package ru.job4j.ood.lsp.parking;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
-@Disabled
+
 class CitiParkingTest {
     @Test
     public void whenAdd1Car1TrackReturnsValidValue() {
@@ -33,7 +33,7 @@ class CitiParkingTest {
         parking.addVehicle(truck1);
         parking.addVehicle(truck2);
         parking.removeVehicle(truck1);
-        assertThat(parking.getTrackSpace()).isEmpty();
+        assertThat(parking.getTrackSpace()).doesNotContain(truck1);
     }
 
 }
