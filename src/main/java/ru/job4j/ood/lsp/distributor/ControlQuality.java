@@ -39,7 +39,7 @@ public class ControlQuality {
         return expireDetect;
     }
 
-    public  void redistribute() {
+    public  void resort() {
         for (AbstractStore store : stores) {
             store.takeAwayIfViolatesRule().forEach(this::distribute);
         }

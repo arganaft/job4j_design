@@ -78,7 +78,7 @@ class ControlQualityTest {
         Food food2 = new Food("food", now.minusDays(30), now, 50);
         warehouse.add(food1);
         shop.add(food2);
-        controlQuality.redistribute();
+        controlQuality.resort();
         assertThat(shop.getStore()).contains(food1).doesNotContain(food2);
     }
 
