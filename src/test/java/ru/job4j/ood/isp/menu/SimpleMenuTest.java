@@ -50,7 +50,6 @@ class SimpleMenuTest {
         MenuPrinter printer = new Printer();
         menu.add(Menu.ROOT, "Сходить в магазин", STUB_ACTION);
         menu.add(Menu.ROOT, "Покормить собаку", STUB_ACTION);
-        // Захватываем стандартный вывод
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputStream));
         printer.print(menu);
