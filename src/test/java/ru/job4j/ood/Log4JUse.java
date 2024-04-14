@@ -4,26 +4,26 @@ package ru.job4j.ood;
 import org.slf4j.Logger;
 
 public class Log4JUse {
-    private final Logger LOG;
+    private final Logger log;
 
     public Log4JUse(Logger logger) {
-        this.LOG = logger;
+        this.log = logger;
     }
 
     public void printDebug(String message) {
-        LOG.debug(message);
+        log.debug(message);
     }
     public void printTrace(String message) {
-        LOG.trace(message);
+        log.trace(message);
     }
     public void printError(String message) {
-        LOG.error(message);
+        log.error(message);
     }
     public void printInfo(String message) {
-        LOG.info(message);
+        log.info(message);
     }
     public void printWarn(String message) {
-        LOG.warn(message);
+        log.warn(message);
     }
 
 }
