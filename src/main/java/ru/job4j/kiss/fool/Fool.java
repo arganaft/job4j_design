@@ -1,9 +1,11 @@
 package ru.job4j.kiss.fool;
 
 public class Fool {
+
     private int startAt = 1;
 
     private String answer = "answer";
+
     private final IOInterface ioInterface;
 
     public static void main(String[] args) {
@@ -26,6 +28,7 @@ public class Fool {
         }
         System.out.println("Finish");
     }
+
 
     private void messages(boolean isRobot) {
         if (isFizzBuzz()) {
