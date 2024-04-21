@@ -12,7 +12,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 class MyLoggerTest {
     @Test
-    void DebugMessageToList() {
+    void debugMessageToList() {
         List<String> storage = new LinkedList<>();
         LogSaver saver = new ListSaver(storage);
         LoggerInterface logger = new MyLogger(saver);
@@ -25,7 +25,7 @@ class MyLoggerTest {
     }
 
     @Test
-    void DebugMessageToConsole() {
+    void debugMessageToConsole() {
         ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStreamCaptor));
@@ -42,7 +42,7 @@ class MyLoggerTest {
     }
 
     @Test
-    void DebugMessageToLog4j() {
+    void debugMessageToLog4j() {
         ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStreamCaptor));
