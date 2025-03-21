@@ -1,11 +1,13 @@
 package ru.job4j.algo.hash;
 
-
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class LongestUniqueSubstring {
     public static String longestUniqueSubstring(String str) {
+        if (str.length() == 0) {
+            return "";
+        }
         Set<Character> result = new LinkedHashSet<>();
         Set<Character> temp = new LinkedHashSet<>();
         for (char ch : str.toCharArray()) {
